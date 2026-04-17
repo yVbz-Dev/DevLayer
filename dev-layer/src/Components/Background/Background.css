@@ -1,0 +1,9 @@
+.Background {
+    background-color: #000000;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    position: absolute;
+    width: 100vw;
+    z-index: -9999;
+    margin-top: -5vh;
+    height: 150vh;
+}

@@ -1,0 +1,14 @@
+.Input {
+    margin: 1rem;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid white;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    color: white;
+    position: relative;
+}
+
+.Input:focus {
+    outline: none;
+}
