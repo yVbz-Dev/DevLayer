@@ -3,6 +3,9 @@
 
 DevLayer is a open-source social media so developers can, interact, share ideas, and much more!
 
+# Status
+In development.
+
 ## Tech Stack
 
 **Client:** React
