@@ -20,7 +20,10 @@ function App() {
     setLoading(registerOrLogin);
     const passInput = document.getElementById(registerOrLogin + 'PassInput')
     const userInput = document.getElementById(registerOrLogin + 'UserInput')
-    console.log(registerOrLogin)
+    
+    // if (passInput == '' || userInput == '') {
+    //   alert("You have to type something in there buddy!")
+    // }
     
     // fetch
     try {
@@ -38,10 +41,11 @@ function App() {
         if (data.status !== 200) {
           alert(responseData.error)
         }
+        setLoading(null)
       }).catch((error) => {
         alert(error)
+        setLoading(null)
       })
-      setLoading(null)
     } catch (error) {
       alert(error)
       setLoading(null)

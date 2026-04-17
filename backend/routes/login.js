@@ -1,6 +1,11 @@
 const express = require('express');
-const supabase = require('../db/supabaseclient')
+const supabase = require('../db/supabaseclient');
+const bcrypt = require('bcrypt');
 const Router = express.Router();
+const JWT = require('jsonwebtoken')
+require('dotenv').config();
+
+const JWT_SECRET = process.env.JWT_SECRET
 
 Router.post('/', async (req, res) => {
     const { username, password } = req.body;
@@ -12,12 +17,22 @@ Router.post('/', async (req, res) => {
         .maybeSingle()
 
     if (error) {
-        res.status(500).json({ error : error})
+        return res.status(500).json({ error : error})
     }
     if (!userData) {
-        res.status(400).json({ error : "User doesn't exist, try creating an account!"})
+        return res.status(400).json({ error : "User doesn't exist, try creating an account!"})
     }
-    console.log(userData)
+    if (!await bcrypt.compare(password, userData.password)) {
+        return res.status(400).json({ error: 'Wrong password'})
+    }
+    
+    const token = JWT.sign({
+        id : userData.id,
+        username : username
+    }, JWT_SECRET)
+    return res.status(200).json({
+        token : token
+    })
 })
 
 module.exports = Router
