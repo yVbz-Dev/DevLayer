@@ -26,13 +26,19 @@ Router.post('/', async (req, res) => {
         return res.status(400).json({ error: 'Wrong password'})
     }
     
-    const token = JWT.sign({
-        id : userData.id,
-        username : username
-    }, JWT_SECRET)
-    return res.status(200).json({
-        token : token
-    })
+    try {
+        const token = JWT.sign({
+            id : userData.id,
+            username : username
+        }, JWT_SECRET,
+            { expiresIn : '30d' }
+        )
+        return res.status(200).json({
+            token : token
+        })
+    } catch (error) {
+        return res.status(500).json({ error : error })
+    }
 })
 
 module.exports = Router

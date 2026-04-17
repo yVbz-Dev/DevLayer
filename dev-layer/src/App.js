@@ -21,9 +21,9 @@ function App() {
     const passInput = document.getElementById(registerOrLogin + 'PassInput')
     const userInput = document.getElementById(registerOrLogin + 'UserInput')
     
-    // if (passInput == '' || userInput == '') {
-    //   alert("You have to type something in there buddy!")
-    // }
+    if (passInput == '' || userInput == '') {
+      alert("You have to type something in there buddy!")
+    }
     
     // fetch
     try {
@@ -37,19 +37,22 @@ function App() {
       })
       .then(async (data) => {
         const responseData = await data.json();
-        console.log(data.status)
         if (data.status !== 200) {
           alert(responseData.error)
         }
-        setLoading(null)
+
+        // save token to localstorage
+        localStorage.setItem('userToken', responseData.token)
+
+        // Alert 
+        alert("Sucess, You've logged on " + userInput.value)
       }).catch((error) => {
         alert(error)
-        setLoading(null)
       })
     } catch (error) {
       alert(error)
-      setLoading(null)
     }
+    setLoading(null)
   }
 
   const Login = () => (
@@ -99,7 +102,7 @@ function App() {
               'width' : '100%',
               'font-weight' : '700',
               'Margin' : '0'
-            }} loading={Loading === 'Login'} onClick={() => handleLogin('login')}></Button>
+            }} loading={Loading === 'login'} onClick={() => handleLogin('login')}></Button>
             <span className='SwitchPage'>Don't have an account?
               <span className='SwitchButton' onClick={() => setPage('Register')}> Create one!</span>
             </span>
@@ -158,7 +161,7 @@ function App() {
               'width' : '100%',
               'font-weight' : '700',
               'Margin' : '0'
-            }} loading={Loading === 'Register'} onClick={() => handleLogin('register')}></Button>
+            }} loading={Loading === 'register'} onClick={() => handleLogin('register')}></Button>
             <span className='SwitchPage'>Already have an account? 
               <span className='SwitchButton' onClick={() => setPage('Login')}> Log in</span>
             </span>
